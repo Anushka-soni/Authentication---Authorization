@@ -30,12 +30,22 @@ The project is currently in its early development stage and focuses on backend s
 - FastAPI application initialized
 - PostgreSQL database connection configured using SQLAlchemy
 - SQLAlchemy engine, session, and declarative base setup
-- Database model for `Questions` with:
+
+### Database Models
+- **Questions**
   - `id` (Primary Key)
   - `question_text`
-- Pydantic schemas for:
-  - Question
-  - Choice (basic structure)
+
+- **Choices**
+  - `id` (Primary Key)
+  - `choice_text`
+  - `is_correct`
+  - `questions_id` (Foreign Key referencing `questions.id`)
+
+### Schemas
+- Pydantic schema for Question
+- Pydantic schema for Choice (basic structure)
+
 
 ---
 
