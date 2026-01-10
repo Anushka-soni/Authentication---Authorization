@@ -1,4 +1,4 @@
-from sqlalchemy import Boolen, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from database import Base
 
 class Questions(Base):
@@ -13,5 +13,5 @@ class Choices(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     choice_text = Column(String, index=True) 
-    is_correct = Column(Boolen, default=False)
+    is_correct = Column(Boolean, default=False)
     questions_id = Column(Integer, ForeignKey("questions.id"))
