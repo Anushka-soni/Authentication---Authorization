@@ -6,6 +6,11 @@ from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 
 app = FastAPI()
+
+@app.get("/")
+def root():
+    return {"message": "Quiz API is running"}
+
 models.Base.metadata.create_all(bind=engine)
  
 class ChoiceBase(BaseModel):
