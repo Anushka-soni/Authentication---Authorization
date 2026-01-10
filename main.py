@@ -8,10 +8,6 @@ from sqlalchemy.orm import Session
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
-# @app.get("/")
-# def root():
-#     return {"message": "Quiz API is running"}
-
  
 class ChoiceBase(BaseModel):
     choice_text: str
@@ -30,17 +26,31 @@ def get_db():
         
 db_dependency = Annotated[Session, Depends(get_db)]
 
+@app.get("/questions/{question_id}")
+async def read_question(question_id: int, db: db_dependency): # type: ignore
+    result = db.query(models.Questions).filter(models.Questions.id == question_id).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Question not found")
+    return result
+
+@app.get("/choices/{question_id}") 
+async def read_question(question_id: int, db: db_dependency): # type: ignore
+    result = db.query(models.Choices).filter(models.Choices.questions_id == question_id).all()
+    if not result:
+        raise HTTPException(status_code=404, detail="Choices not found")
+    return result
+
 @app.post("/questions/")
-async def create_questions(questions: QuestionBase, db: db_dependency):
-    db_question = models.Question(question_text=questions.question_text)
+async def create_questions(questions: QuestionBase, db: db_dependency): # type: ignore
+    db_question = models.Questions(question_text=questions.question_text)
     db.add(db_question)
     db.commit()
     db.refresh(db_question)
     for choice in questions.choices:
-        db_choice = models.Choice(
+        db_choice = models.Choices(
             choice_text=choice.choice_text,
             is_correct=choice.is_correct,
-            question_id=db_question.id
+            questions_id=db_question.id
         )
         db.add(db_choice)
     db.commit()
