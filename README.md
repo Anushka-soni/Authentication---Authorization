@@ -40,24 +40,20 @@ The project is currently in its early development stage and focuses on backend s
   - `id` (Primary Key)
   - `choice_text`
   - `is_correct`
-  - `questions_id` (Foreign Key referencing `questions.id`)
+  - `questions_id` (Foreign Key → `questions.id`)
 
-### Schemas
+### API Endpoint
+- **POST `/questions/`**
+  - Creates a question along with its related choices
+  - Persists data using SQLAlchemy sessions
+
+### Request Schema
 - Pydantic schema for Question
-- Pydantic schema for Choice (basic structure)
-
-
----
-
-## 🛠️ Current Focus
-
-- Designing database schema
-- Structuring backend architecture
-- Preparing models and schemas for API development
+- Nested Pydantic schema for Choices
 
 ---
 
 ## 📌 Project Status
 
-This project is under active development.  
-The README will be updated as new features are implemented.
+The project is under active development.  
+Currently, only question creation functionality is implemented.
